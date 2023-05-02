@@ -45,6 +45,7 @@ in the section entitled "GNU Free Documentation License".
 |===
 | Version | Author | Date | Comments
 | 0.0.1 | J.B. Metz | April 2023 | Initial version.
+| 0.0.2 | J.B. Metz | May 2023 | Additional information about format.
 |===
 
 :numbered:
@@ -53,18 +54,27 @@ in the section entitled "GNU Free Documentation License".
 The BSD disklabel format is a partitioning schema mainly used by BSD operating
 systems.
 
-The BSD disklabel consists of:
+BSD disklabel traditionally contain 8 entries for describing partitions. These
+are labeled alphabetically, "a" through to "h". Some BSD variants have since
+increased this to 16 partitions, labeled "a" through to "p".
 
-* the drive descriptor
-* partition map entry of type Apple_partition_map
-  * zero partition map entries
+Partitions "a", "b", "c" and "d" have fixed meanings:
+
+* "a" is the "root" partition;
+* "b" is the "swap" partition;
+* "c" is the volume used by disklabel;
+* "d" is the entire physical disk.
+
+[NOTE]
+Information about partition "d" is not stored in the corresponding BSD disklabel
+partition entry and typically filled with 0-byte values.
 
 [cols="1,5",options="header"]
 |===
 | Characteristics | Description
-| Byte order | big-endian
-| Date and time values |
-| Character strings |
+| Byte order | little-endian
+| Date and time values | N/A
+| Character strings | ASCII
 |===
 
 == BSD disklabel
@@ -77,8 +87,10 @@ The BSD disklabel is variable of size and consists of:
 | 0 | 4 | "WEV\x82" | Signature
 | 4 | 2 | | Drive type
 | 6 | 2 | | Controller specific drive sub type
-| 8 | 16 | | Drive type name
-| 24 | 16 | | [yellow-background]*Unknown (Pack identifier)*
+| 8 | 16 | | Drive type name +
+Contains an ASCII string [yellow-background]*(with an end-of-string character?)*
+| 24 | 16 | | [yellow-background]*Unknown (Pack identifier)* +
+Contains an ASCII string [yellow-background]*(with an end-of-string character?)*
 | 40 | 4 | | Bytes per sector
 | 44 | 4 | | (Data) Sectors per track
 | 48 | 4 | | Tracks per cylinder
@@ -100,15 +112,48 @@ The BSD disklabel is variable of size and consists of:
 | 132 | 4 | "WEV\x82" | Signature
 | 136 | 2 | | Checksum +
 Contains a XOR of the BSD disklabel
-| 138 | 2 | | Number of partitions
+| 138 | 2 | | Number of partition entries
 | 140 | 4 | | Boot area size in bytes
 | 144 | 4 | | Maximum superblock size in bytes
-| 148 | number of partitions x 18 | | Array of partition entries
+| 148 | number of partitions x 16 | | Array of partition entries
+|===
+
+[NOTE]
+The number of partition entries contains the total number of entries in
+the array, not the number of partitions allocated.
+
+=== [[drive_types]]Drive types
+
+[cols="1,1,5",options="header"]
+|===
+| Value | Identifier | Description
+| 1 | DTYPE_SMD | SMD, XSMD
+| 2 | DTYPE_MSCP | MSCP
+| 3 | DTYPE_DEC | DEC (rk, rl)
+| 4 | DTYPE_SCSI | SCSI
+| 5 | DTYPE_ESDI | ESDI
+| 6 | DTYPE_ST506 | ST506
+| 7 | DTYPE_HPIB | CS/80 on HP-IB
+| 8 | DTYPE_HPFL | HP Fiber-link
+3+|
+| 10 | DTYPE_FLOPPY | Floppy drive
+|===
+
+=== Flags
+
+[cols="1,1,5",options="header"]
+|===
+| Value | Identifier | Description
+| 0x00000001 | D_REMOVABLE | Removable media
+| 0x00000002 | D_ECC | Media supports error-correction codes (ECC)
+| 0x00000004 | D_BADSECT | Media suppors bad sectro forwarding
+| 0x00000008 | D_RAMDISK | Emulated media using RAM
+| 0x00000010 | D_CHAIN | Media can do back-to-back transfers
 |===
 
 === Partition entry
 
-The partition entry is 18 bytes of size and consists of:
+The partition entry is 16 bytes of size and consists of:
 
 [cols="1,1,1,5",options="header"]
 |===
@@ -119,7 +164,31 @@ The partition entry is 18 bytes of size and consists of:
 | 12 | 1 | | File system type
 | 13 | 1 | | File system fragments per block
 | 14 | 2 | | [yellow-background]*Unknown (File system specific value)*
-| 16 | 2 | | File system cylinders per group
+|===
+
+[NOTE]
+An emtpy partition entry consists of 0-byte values.
+
+==== [[file_system_types]]File system types
+
+[cols="1,1,5",options="header"]
+|===
+| Value | Identifier | Description
+| 0 | FS_UNUSED | Unused
+| 1 | FS_SWAP | Swap
+| 2 | FS_V6 | 6th edition
+| 3 | FS_V7 | 7th edition
+| 4 | FS_SYSV | System V
+| 5 | FS_V71K | 7th edition with 1 KiB blocks
+| 6 | FS_V8 | 8th edition with 4 KiB blocks
+| 7 | FS_BSDFFS | BSD 4.2 fast file system (FFS)
+| 8 | FS_MSDOS | MS-DOS file system
+| 9 | FS_BSDLFS | BSD 4.4 log-structured file system
+| 10 | FS_OTHER | Other (unspecified) file system
+| 11 | FS_HPFS | OS/2 high-performance file system (HPFS)
+| 12 | FS_ISO9660 | ISO 9660 (CD-ROM) file system
+| 13 | FS_BOOT | Boot code
+| 14 | | [yellow-background]*Unknown (Vinum)*
 |===
 
 :numbered!:
