@@ -1,5 +1,5 @@
 /*
- * Library to access the Apple Partition Map (APM) volume system
+ * Library to access the BSD disklabel volume system
  *
  * Copyright (C) 2023, Joachim Metz <joachim.metz@gmail.com>
  *
@@ -85,7 +85,7 @@ int libvsbsdl_set_codepage(
      int codepage,
      libvsbsdl_error_t **error );
 
-/* Determines if a volume contains an Apple Partition Map (APM) signature
+/* Determines if a volume contains a BSD disklabel signature
  * Returns 1 if true, 0 if not or -1 on error
  */
 LIBVSBSDL_EXTERN \
@@ -95,7 +95,7 @@ int libvsbsdl_check_volume_signature(
 
 #if defined( LIBVSBSDL_HAVE_WIDE_CHARACTER_TYPE )
 
-/* Determines if a volume contains an Apple Partition Map (APM) signature
+/* Determines if a volume contains a BSD disklabel signature
  * Returns 1 if true, 0 if not or -1 on error
  */
 LIBVSBSDL_EXTERN \
@@ -107,7 +107,7 @@ int libvsbsdl_check_volume_signature_wide(
 
 #if defined( LIBVSBSDL_HAVE_BFIO )
 
-/* Determines if a volume contains an Apple Partition Map (APM) signature using a Basic File IO (bfio) handle
+/* Determines if a volume contains a BSD disklabel signature using a Basic File IO (bfio) handle
  * Returns 1 if true, 0 if not or -1 on error
  */
 LIBVSBSDL_EXTERN \
@@ -319,6 +319,16 @@ LIBVSBSDL_EXTERN \
 int libvsbsdl_partition_get_entry_index(
      libvsbsdl_partition_t *partition,
      uint16_t *entry_index,
+     libvsbsdl_error_t **error );
+
+/* Retrieves the ASCII encoded string of the partition name
+ * Returns 1 if successful or -1 on error
+ */
+LIBVSBSDL_EXTERN \
+int libvsbsdl_partition_get_name_string(
+     libvsbsdl_partition_t *partition,
+     char *string,
+     size_t string_size,
      libvsbsdl_error_t **error );
 
 /* Retrieves the partition offset relative to the start of the volume

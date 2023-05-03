@@ -37,6 +37,20 @@
 
 PyMethodDef pyvsbsdl_partition_object_methods[] = {
 
+	{ "get_entry_index",
+	  (PyCFunction) pyvsbsdl_partition_get_entry_index,
+	  METH_NOARGS,
+	  "get_entry_index() -> Integer\n"
+	  "\n"
+	  "Retrieves the partition entry index." },
+
+	{ "get_name_string",
+	  (PyCFunction) pyvsbsdl_partition_get_name_string,
+	  METH_NOARGS,
+	  "get_name_string() -> String\n"
+	  "\n"
+	  "Retrieves the ASCII encoded string of the partition name." },
+
 	{ "get_volume_offset",
 	  (PyCFunction) pyvsbsdl_partition_get_volume_offset,
 	  METH_NOARGS,
@@ -105,6 +119,18 @@ PyMethodDef pyvsbsdl_partition_object_methods[] = {
 };
 
 PyGetSetDef pyvsbsdl_partition_object_get_set_definitions[] = {
+
+	{ "entry_index",
+	  (getter) pyvsbsdl_partition_get_entry_index,
+	  (setter) 0,
+	  "The entry index.",
+	  NULL },
+
+	{ "name_string",
+	  (getter) pyvsbsdl_partition_get_name_string,
+	  (setter) 0,
+	  "The ASCII encoded string of the partition name.",
+	  NULL },
 
 	{ "volume_offset",
 	  (getter) pyvsbsdl_partition_get_volume_offset,
@@ -368,6 +394,127 @@ void pyvsbsdl_partition_free(
 	}
 	ob_type->tp_free(
 	 (PyObject*) pyvsbsdl_partition );
+}
+
+/* Retrieves the entry index
+ * Returns a Python object if successful or NULL on error
+ */
+PyObject *pyvsbsdl_partition_get_entry_index(
+           pyvsbsdl_partition_t *pyvsbsdl_partition,
+           PyObject *arguments PYVSBSDL_ATTRIBUTE_UNUSED )
+{
+	PyObject *integer_object = NULL;
+	libcerror_error_t *error = NULL;
+	static char *function    = "pyvsbsdl_partition_get_entry_index";
+	uint16_t entry_index     = 0;
+	int result               = 0;
+
+	PYVSBSDL_UNREFERENCED_PARAMETER( arguments )
+
+	if( pyvsbsdl_partition == NULL )
+	{
+		PyErr_Format(
+		 PyExc_ValueError,
+		 "%s: invalid partition.",
+		 function );
+
+		return( NULL );
+	}
+	Py_BEGIN_ALLOW_THREADS
+
+	result = libvsbsdl_partition_get_entry_index(
+	          pyvsbsdl_partition->partition,
+	          &entry_index,
+	          &error );
+
+	Py_END_ALLOW_THREADS
+
+	if( result != 1 )
+	{
+		pyvsbsdl_error_raise(
+		 error,
+		 PyExc_IOError,
+		 "%s: unable to retrieve entry index.",
+		 function );
+
+		libcerror_error_free(
+		 &error );
+
+		return( NULL );
+	}
+#if PY_MAJOR_VERSION >= 3
+	integer_object = PyLong_FromLong(
+	                  (long) entry_index );
+#else
+	integer_object = PyInt_FromLong(
+	                  (long) entry_index );
+#endif
+	return( integer_object );
+}
+
+/* Retrieves the name string
+ * Returns a Python object if successful or NULL on error
+ */
+PyObject *pyvsbsdl_partition_get_name_string(
+           pyvsbsdl_partition_t *pyvsbsdl_partition,
+           PyObject *arguments PYVSBSDL_ATTRIBUTE_UNUSED )
+{
+	char name[ 32 ];
+
+	PyObject *string_object  = NULL;
+	libcerror_error_t *error = NULL;
+	const char *errors       = NULL;
+	static char *function    = "pyvsbsdl_partition_get_name_string";
+	size_t name_length       = 0;
+	int result               = 0;
+
+	PYVSBSDL_UNREFERENCED_PARAMETER( arguments )
+
+	if( pyvsbsdl_partition == NULL )
+	{
+		PyErr_Format(
+		 PyExc_TypeError,
+		 "%s: invalid partition.",
+		 function );
+
+		return( NULL );
+	}
+	Py_BEGIN_ALLOW_THREADS
+
+	result = libvsbsdl_partition_get_name_string(
+		  pyvsbsdl_partition->partition,
+		  name,
+		  32,
+		  &error );
+
+	Py_END_ALLOW_THREADS
+
+	if( result != 1 )
+	{
+		pyvsbsdl_error_raise(
+		 error,
+		 PyExc_IOError,
+		 "%s: unable to retrieve name.",
+		 function );
+
+		libcerror_error_free(
+		 &error );
+
+		return( NULL );
+	}
+	name_length = narrow_string_length(
+	               name );
+
+	/* Pass the string length to PyUnicode_DecodeUTF8
+	 * otherwise it makes the end of string character is part
+	 * of the string
+	 */
+	string_object = PyUnicode_DecodeUTF8(
+			 (char *) name,
+			 (Py_ssize_t) name_length,
+			 errors );
+
+	return( string_object );
 }
 
 /* Retrieves the volume offset

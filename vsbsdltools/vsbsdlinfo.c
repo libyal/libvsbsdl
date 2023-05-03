@@ -1,5 +1,5 @@
 /*
- * Shows information obtained from a Apple Partition Map (APM) volume system
+ * Shows information obtained from a BSD disklabel volume system
  *
  * Copyright (C) 2023, Joachim Metz <joachim.metz@gmail.com>
  *
@@ -61,8 +61,8 @@ void usage_fprint(
 	{
 		return;
 	}
-	fprintf( stream, "Use vsbsdlinfo to determine information about an Apple Partition\n"
-	                 "Map (APM) volume system.\n\n" );
+	fprintf( stream, "Use vsbsdlinfo to determine information about a BSD disklabel\n"
+	                 "volume system.\n\n" );
 
 	fprintf( stream, "Usage: vsbsdlinfo [ -o offset ] [ -hvV ] source\n\n" );
 

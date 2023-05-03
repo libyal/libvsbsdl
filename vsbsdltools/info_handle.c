@@ -556,6 +556,8 @@ int info_handle_partition_fprint(
      libvsbsdl_partition_t *partition,
      libcerror_error_t **error )
 {
+	char ascii_string[ 32 ];
+
 	static char *function = "info_handle_partition_fprint";
 	size64_t size         = 0;
 	off64_t volume_offset = 0;
@@ -570,6 +572,28 @@ int info_handle_partition_fprint(
 		 function );
 
 		return( -1 );
+	}
+	if( libvsbsdl_partition_get_name_string(
+	     partition,
+	     ascii_string,
+	     32,
+	     error ) != 1 )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_RUNTIME,
+		 LIBCERROR_RUNTIME_ERROR_GET_FAILED,
+		 "%s: unable to retrieve partition name string.",
+		 function );
+
+		return( -1 );
+	}
+	if( ascii_string[ 0 ] != 0 )
+	{
+		fprintf(
+		 info_handle->notify_stream,
+		 "\tName\t\t\t: %s\n",
+		 ascii_string );
 	}
 	if( libvsbsdl_partition_get_volume_offset(
 	     partition,
@@ -684,7 +708,13 @@ int info_handle_partitions_fprint(
 	 info_handle->notify_stream,
 	 "\n" );
 
-	if( number_of_partitions > 0 )
+	if( number_of_partitions == 0 )
+	{
+		fprintf(
+		 info_handle->notify_stream,
+		 "\n" );
+	}
+	else
 	{
 		for( partition_index = 0;
 		     partition_index < number_of_partitions;
@@ -725,11 +755,6 @@ int info_handle_partitions_fprint(
 			 info_handle->notify_stream,
 			 "Partition: %" PRIu16 "\n",
 			 entry_index + 1 );
-
-			fprintf(
-			 info_handle->notify_stream,
-			 "\tLabel\t\t\t: %c\n",
-			 'a' + (char) entry_index );
 
 			if( info_handle_partition_fprint(
 			     info_handle,

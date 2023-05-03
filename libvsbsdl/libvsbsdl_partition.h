@@ -97,6 +97,13 @@ int libvsbsdl_partition_get_entry_index(
      libcerror_error_t **error );
 
 LIBVSBSDL_EXTERN \
+int libvsbsdl_partition_get_name_string(
+     libvsbsdl_partition_t *partition,
+     char *string,
+     size_t string_size,
+     libcerror_error_t **error );
+
+LIBVSBSDL_EXTERN \
 int libvsbsdl_partition_get_volume_offset(
      libvsbsdl_partition_t *partition,
      off64_t *volume_offset,

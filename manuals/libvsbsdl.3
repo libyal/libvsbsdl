@@ -1,4 +1,4 @@
-.Dd May  1, 2023
+.Dd May  3, 2023
 .Dt libvsbsdl 3
 .Os libvsbsdl
 .Sh NAME
@@ -84,6 +84,8 @@ Partition functions
 .Fn libvsbsdl_partition_free "libvsbsdl_partition_t **partition" "libvsbsdl_error_t **error"
 .Ft int
 .Fn libvsbsdl_partition_get_entry_index "libvsbsdl_partition_t *partition" "uint16_t *entry_index" "libvsbsdl_error_t **error"
+.Ft int
+.Fn libvsbsdl_partition_get_name_string "libvsbsdl_partition_t *partition" "char *string" "size_t string_size" "libvsbsdl_error_t **error"
 .Ft int
 .Fn libvsbsdl_partition_get_volume_offset "libvsbsdl_partition_t *partition" "off64_t *volume_offset" "libvsbsdl_error_t **error"
 .Ft ssize_t

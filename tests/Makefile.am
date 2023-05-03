@@ -205,7 +205,14 @@ vsbsdl_test_tools_info_handle_SOURCES = \
 	vsbsdl_test_unused.h
 
 vsbsdl_test_tools_info_handle_LDADD = \
+	@LIBBFIO_LIBADD@ \
+	@LIBCPATH_LIBADD@ \
+	@LIBCFILE_LIBADD@ \
+	@LIBUNA_LIBADD@ \
+	@LIBCSPLIT_LIBADD@ \
+	@LIBCNOTIFY_LIBADD@ \
 	@LIBCLOCALE_LIBADD@ \
+	@LIBCDATA_LIBADD@ \
 	../libvsbsdl/libvsbsdl.la \
 	@LIBCERROR_LIBADD@
 

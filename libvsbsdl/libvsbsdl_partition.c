@@ -390,6 +390,108 @@ int libvsbsdl_partition_get_entry_index(
 	return( result );
 }
 
+/* Retrieves the ASCII encoded string of the partition name
+ * Returns 1 if successful or -1 on error
+ */
+int libvsbsdl_partition_get_name_string(
+     libvsbsdl_partition_t *partition,
+     char *string,
+     size_t string_size,
+     libcerror_error_t **error )
+{
+	libvsbsdl_internal_partition_t *internal_partition = NULL;
+	static char *function                              = "libvsbsdl_partition_get_name_string";
+	uint16_t entry_index                               = 0;
+	int result                                         = 1;
+
+	if( partition == NULL )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
+		 LIBCERROR_ARGUMENT_ERROR_INVALID_VALUE,
+		 "%s: invalid partition.",
+		 function );
+
+		return( -1 );
+	}
+	internal_partition = (libvsbsdl_internal_partition_t *) partition;
+
+	if( string == NULL )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
+		 LIBCERROR_ARGUMENT_ERROR_INVALID_VALUE,
+		 "%s: invalid string.",
+		 function );
+
+		return( -1 );
+	}
+	if( ( string_size < 2 )
+	 || ( string_size > (size_t) SSIZE_MAX ) )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
+		 LIBCERROR_ARGUMENT_ERROR_VALUE_OUT_OF_BOUNDS,
+		 "%s: invalid string size value out of bounds.",
+		 function );
+
+		return( -1 );
+	}
+#if defined( HAVE_MULTI_THREAD_SUPPORT )
+	if( libcthreads_read_write_lock_grab_for_read(
+	     internal_partition->read_write_lock,
+	     error ) != 1 )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_RUNTIME,
+		 LIBCERROR_RUNTIME_ERROR_SET_FAILED,
+		 "%s: unable to grab read/write lock for reading.",
+		 function );
+
+		return( -1 );
+	}
+#endif
+	if( libvsbsdl_partition_entry_get_entry_index(
+	     internal_partition->partition_entry,
+	     &entry_index,
+	     error ) != 1 )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_RUNTIME,
+		 LIBCERROR_RUNTIME_ERROR_GET_FAILED,
+		 "%s: unable to retrieve entry index.",
+		 function );
+
+		result = -1;
+	}
+	else
+	{
+		string[ 0 ] = 'a' + (char) entry_index;
+		string[ 1 ] = 0;
+	}
+#if defined( HAVE_MULTI_THREAD_SUPPORT )
+	if( libcthreads_read_write_lock_release_for_read(
+	     internal_partition->read_write_lock,
+	     error ) != 1 )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_RUNTIME,
+		 LIBCERROR_RUNTIME_ERROR_SET_FAILED,
+		 "%s: unable to release read/write lock for reading.",
+		 function );
+
+		return( -1 );
+	}
+#endif
+	return( result );
+}
+
 /* Retrieves the partition offset relative to the start of the volume
  * Returns 1 if successful or -1 on error
  */

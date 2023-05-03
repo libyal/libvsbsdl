@@ -62,6 +62,14 @@ int pyvsbsdl_partition_init(
 void pyvsbsdl_partition_free(
       pyvsbsdl_partition_t *pyvsbsdl_partition );
 
+PyObject *pyvsbsdl_partition_get_entry_index(
+           pyvsbsdl_partition_t *pyvsbsdl_partition,
+           PyObject *arguments );
+
+PyObject *pyvsbsdl_partition_get_name_string(
+           pyvsbsdl_partition_t *pyvsbsdl_partition,
+           PyObject *arguments );
+
 PyObject *pyvsbsdl_partition_get_volume_offset(
            pyvsbsdl_partition_t *pyvsbsdl_partition,
            PyObject *arguments );
