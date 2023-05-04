@@ -262,8 +262,8 @@ class PartitionTypeTests(unittest.TestCase):
     with self.assertRaises(IOError):
       vsbsdl_partition.seek_offset(16, os.SEEK_SET)
 
-  def test_get_type(self):
-    """Tests the get_type function and type property."""
+  def test_get_entry_index(self):
+    """Tests the get_entry_index function and entry_index property."""
     test_source = unittest.source
     if not test_source:
       raise unittest.SkipTest("missing source")
@@ -272,10 +272,10 @@ class PartitionTypeTests(unittest.TestCase):
 
     vsbsdl_partition.open(test_source)
 
-    type = vsbsdl_partition.get_type()
-    self.assertIsNotNone(type)
+    entry_index = vsbsdl_partition.get_entry_index()
+    self.assertIsNotNone(entry_index)
 
-    self.assertIsNotNone(vsbsdl_partition.type)
+    self.assertIsNotNone(vsbsdl_partition.entry_index)
 
     vsbsdl_partition.close()
 
