@@ -123,7 +123,10 @@ int libvsbsdl_partition_initialize(
 		 "%s: unable to clear partition.",
 		 function );
 
-		goto on_error;
+		memory_free(
+		 internal_partition );
+
+		return( -1 );
 	}
 	if( libvsbsdl_partition_entry_get_start_sector(
 	     partition_entry,
@@ -236,6 +239,12 @@ int libvsbsdl_partition_initialize(
 on_error:
 	if( internal_partition != NULL )
 	{
+		if( internal_partition->sectors_vector != NULL )
+		{
+			libfdata_vector_free(
+			 &( internal_partition->sectors_vector ),
+			 NULL );
+		}
 		memory_free(
 		 internal_partition );
 	}
