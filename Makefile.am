@@ -33,8 +33,10 @@ DPKG_FILES = \
 	dpkg/control \
 	dpkg/copyright \
 	dpkg/rules \
-	dpkg/libvsbsdl-dev.install \
 	dpkg/libvsbsdl.install \
+	dpkg/libvsbsdl-dev.install \
+	dpkg/libvsbsdl-python3.install \
+	dpkg/libvsbsdl-tools.install \
 	dpkg/source/format
 
 GETTEXT_FILES = \
