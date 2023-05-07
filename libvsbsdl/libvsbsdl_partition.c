@@ -86,6 +86,17 @@ int libvsbsdl_partition_initialize(
 
 		return( -1 );
 	}
+	if( io_handle->bytes_per_sector == 0 )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_RUNTIME,
+		 LIBCERROR_RUNTIME_ERROR_VALUE_OUT_OF_BOUNDS,
+		 "%s: invalid IO handle - bytes per sector value out of bounds.",
+		 function );
+
+		return( -1 );
+	}
 	if( partition_entry == NULL )
 	{
 		libcerror_error_set(
@@ -138,6 +149,17 @@ int libvsbsdl_partition_initialize(
 		 LIBCERROR_ERROR_DOMAIN_RUNTIME,
 		 LIBCERROR_RUNTIME_ERROR_GET_FAILED,
 		 "%s: unable to retrieve partition start sector.",
+		 function );
+
+		goto on_error;
+	}
+	if( partition_offset > ( (off64_t) INT64_MAX / io_handle->bytes_per_sector ) )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_RUNTIME,
+		 LIBCERROR_RUNTIME_ERROR_VALUE_OUT_OF_BOUNDS,
+		 "%s: invalid partition offset value out of bounds.",
 		 function );
 
 		goto on_error;
