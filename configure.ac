@@ -2,7 +2,7 @@ AC_PREREQ([2.71])
 
 AC_INIT(
  [libvsbsdl],
- [20230715],
+ [20230808],
  [joachim.metz@gmail.com])
 
 AC_CONFIG_SRCDIR(
