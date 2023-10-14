@@ -136,12 +136,14 @@ class VolumeTypeTests(unittest.TestCase):
 
     vsbsdl_volume.open(test_source)
 
-    bytes_per_sector = vsbsdl_volume.get_bytes_per_sector()
-    self.assertIsNotNone(bytes_per_sector)
+    try:
+      bytes_per_sector = vsbsdl_volume.get_bytes_per_sector()
+      self.assertIsNotNone(bytes_per_sector)
 
-    self.assertIsNotNone(vsbsdl_volume.bytes_per_sector)
+      self.assertIsNotNone(vsbsdl_volume.bytes_per_sector)
 
-    vsbsdl_volume.close()
+    finally:
+      vsbsdl_volume.close()
 
   def test_get_number_of_partitions(self):
     """Tests the get_number_of_partitions function and number_of_partitions property."""
@@ -153,12 +155,34 @@ class VolumeTypeTests(unittest.TestCase):
 
     vsbsdl_volume.open(test_source)
 
-    number_of_partitions = vsbsdl_volume.get_number_of_partitions()
-    self.assertIsNotNone(number_of_partitions)
+    try:
+      number_of_partitions = vsbsdl_volume.get_number_of_partitions()
+      self.assertIsNotNone(number_of_partitions)
 
-    self.assertIsNotNone(vsbsdl_volume.number_of_partitions)
+      self.assertIsNotNone(vsbsdl_volume.number_of_partitions)
 
-    vsbsdl_volume.close()
+    finally:
+      vsbsdl_volume.close()
+
+  def test_get_partition(self):
+    """Tests the get_partition function."""
+    test_source = unittest.source
+    if not test_source:
+      raise unittest.SkipTest("missing source")
+
+    vsbsdl_volume = pyvsbsdl.volume()
+
+    vsbsdl_volume.open(test_source)
+
+    try:
+      if not vsbsdl_volume.number_of_partitions:
+        raise unittest.SkipTest("missing partitions")
+
+      partition = vsbsdl_volume.get_partition(0)
+      self.assertIsNotNone(partition)
+
+    finally:
+      vsbsdl_volume.close()
 
 
 if __name__ == "__main__":

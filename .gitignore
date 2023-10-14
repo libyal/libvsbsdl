@@ -1,6 +1,6 @@
 # Files to ignore by git
 #
-# Version: 20230405
+# Version: 20230926
 
 # Generic auto-generated build files
 *~
@@ -25,10 +25,13 @@
 *.swp
 *.Tpo
 *.trs
+*.whl
 /*.egg-info/
+__pycache__
 .deps
 .dirstamp
 .libs
+.tox
 INSTALL
 Makefile
 Makefile.bcc
@@ -125,6 +128,7 @@ stamp-h[1-9]
 /libvsbsdl/libvsbsdl.rc
 /libvsbsdl/libvsbsdl_definitions.h
 /pyvsbsdl-python[23]/*.[ch]
+/setup.cfg
 /vsbsdltools/*.exe
 /vsbsdltools/vsbsdlinfo
 /tests/*.exe
@@ -136,6 +140,7 @@ stamp-h[1-9]
 /tests/vsbsdl_test_notify
 /tests/vsbsdl_test_partition
 /tests/vsbsdl_test_partition_entry
+/tests/vsbsdl_test_partition_values
 /tests/vsbsdl_test_sector_data
 /tests/vsbsdl_test_support
 /tests/vsbsdl_test_tools_info_handle
