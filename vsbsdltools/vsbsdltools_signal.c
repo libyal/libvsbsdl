@@ -40,7 +40,7 @@ void (*vsbsdltools_signal_signal_handler)( vsbsdltools_signal_t ) = NULL;
 /* Signal handler for Ctrl+C or Ctrl+Break signals
  */
 BOOL WINAPI vsbsdltools_signal_handler(
-             unsigned long signal )
+             vsbsdltools_signal_t signal )
 {
 	static char *function = "vsbsdltools_signal_handler";
 
@@ -112,7 +112,7 @@ int vsbsdltools_signal_attach(
 	vsbsdltools_signal_signal_handler = signal_handler;
 
 	if( SetConsoleCtrlHandler(
-	     vsbsdltools_signal_handler,
+	     (PHANDLER_ROUTINE) vsbsdltools_signal_handler,
 	     TRUE ) == 0 )
 	{
 		libcerror_error_set(
@@ -179,7 +179,7 @@ int vsbsdltools_signal_detach(
 	static char *function = "vsbsdltools_signal_detach";
 
 	if( SetConsoleCtrlHandler(
-	     vsbsdltools_signal_handler,
+	     (PHANDLER_ROUTINE) vsbsdltools_signal_handler,
 	     FALSE ) == 0 )
 	{
 		libcerror_error_set(

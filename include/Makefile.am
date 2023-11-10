@@ -19,9 +19,9 @@ MAINTAINERCLEANFILES = \
 	Makefile.in
 
 distclean: clean
-	/bin/rm -f libvsbsdl.h
-	/bin/rm -f libvsbsdl/definitions.h
-	/bin/rm -f libvsbsdl/features.h
-	/bin/rm -f libvsbsdl/types.h
-	/bin/rm -f Makefile
+	-rm -f libvsbsdl.h
+	-rm -f libvsbsdl/definitions.h
+	-rm -f libvsbsdl/features.h
+	-rm -f libvsbsdl/types.h
+	-rm -f Makefile
 

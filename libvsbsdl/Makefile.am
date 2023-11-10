@@ -71,11 +71,13 @@ MAINTAINERCLEANFILES = \
 	Makefile.in
 
 distclean: clean
-	/bin/rm -f libvsbsdl_definitions.h
-	/bin/rm -f libvsbsdl.rc
-	/bin/rm -f Makefile
+	-rm -f libvsbsdl_definitions.h
+	-rm -f libvsbsdl.rc
+	-rm -f Makefile
 
-splint:
+sources-local: $(BUILT_SOURCES)
+
+splint-local:
 	@echo "Running splint on libvsbsdl ..."
 	-splint -preproc -redef $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(libvsbsdl_la_SOURCES)
 
