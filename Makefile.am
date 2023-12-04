@@ -18,8 +18,6 @@ SUBDIRS = \
 	libvsbsdl \
 	vsbsdltools \
 	pyvsbsdl \
-	pyvsbsdl-python2 \
-	pyvsbsdl-python3 \
 	po \
 	manuals \
 	tests \

@@ -2,7 +2,7 @@ AC_PREREQ([2.71])
 
 AC_INIT(
  [libvsbsdl],
- [20231110],
+ [20231204],
  [joachim.metz@gmail.com])
 
 AC_CONFIG_SRCDIR(
@@ -110,7 +110,7 @@ dnl Check if libvsbsdl Python bindings (pyvsbsdl) required headers and functions
 AX_PYTHON_CHECK_ENABLE
 
 AS_IF(
-  [test "x${ac_cv_enable_python}" != xno || test "x${ac_cv_enable_python2}" != xno || test "x${ac_cv_enable_python3}" != xno],
+  [test "x${ac_cv_enable_python}" != xno],
   [dnl Headers included in pyvsbsdl/pyvsbsdl_error.c
   AC_CHECK_HEADERS([stdarg.h varargs.h])
 
@@ -171,8 +171,6 @@ AC_CONFIG_FILES([libfcache/Makefile])
 AC_CONFIG_FILES([libfdata/Makefile])
 AC_CONFIG_FILES([libvsbsdl/Makefile])
 AC_CONFIG_FILES([pyvsbsdl/Makefile])
-AC_CONFIG_FILES([pyvsbsdl-python2/Makefile])
-AC_CONFIG_FILES([pyvsbsdl-python3/Makefile])
 AC_CONFIG_FILES([vsbsdltools/Makefile])
 AC_CONFIG_FILES([po/Makefile.in])
 AC_CONFIG_FILES([po/Makevars])
