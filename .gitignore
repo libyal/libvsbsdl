@@ -132,6 +132,7 @@ stamp-h[1-9]
 /vsbsdltools/vsbsdlinfo
 /tests/*.exe
 /tests/input
+/tests/notify_stream.log
 /tests/tmp*
 /tests/vsbsdl_test_disklabel
 /tests/vsbsdl_test_error

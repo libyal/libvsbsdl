@@ -6,9 +6,7 @@ EXTRA_DIST = \
 	libvsbsdl.3 \
 	vsbsdlinfo.1
 
-MAINTAINERCLEANFILES = \
+DISTCLEANFILES = \
+	Makefile \
 	Makefile.in
-
-distclean: clean
-	-rm -f Makefile
 

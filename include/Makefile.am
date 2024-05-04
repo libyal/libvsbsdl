@@ -15,13 +15,11 @@ EXTRA_DIST = \
 	libvsbsdl/features.h.in \
 	libvsbsdl/types.h.in
 
-MAINTAINERCLEANFILES = \
+DISTCLEANFILES = \
+	libvsbsdl.h \
+	libvsbsdl/definitions.h \
+	libvsbsdl/features.h \
+	libvsbsdl/types.h \
+	Makefile \
 	Makefile.in
-
-distclean: clean
-	-rm -f libvsbsdl.h
-	-rm -f libvsbsdl/definitions.h
-	-rm -f libvsbsdl/features.h
-	-rm -f libvsbsdl/types.h
-	-rm -f Makefile
 
