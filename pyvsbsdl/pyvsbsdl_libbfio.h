@@ -1,7 +1,7 @@
 /*
  * The libbfio header wrapper
  *
- * Copyright (C) 2023-2024, Joachim Metz <joachim.metz@gmail.com>
+ * Copyright (C) 2023-2025, Joachim Metz <joachim.metz@gmail.com>
  *
  * Refer to AUTHORS for acknowledgements.
  *
