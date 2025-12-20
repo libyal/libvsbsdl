@@ -84,7 +84,7 @@ Function RunTest
 	param( [string]$TestType )
 
 	$TestDescription = "Testing: ${TestName}"
-	$TestExecutable = "${TestExecutablesDirectory}\vsbsdi_test_tools_${TestName}.exe"
+	$TestExecutable = "${TestExecutablesDirectory}\vsbsdl_test_tools_${TestName}.exe"
 
 	$Output = Invoke-Expression ${TestExecutable}
 	$Result = ${LastExitCode}
@@ -111,9 +111,9 @@ Function RunTestWithInput
 	param( [string]$TestType )
 
 	$TestDescription = "Testing: ${TestName}"
-	$TestExecutable = "${TestExecutablesDirectory}\vsbsdi_test_tools_${TestName}.exe"
+	$TestExecutable = "${TestExecutablesDirectory}\vsbsdl_test_tools_${TestName}.exe"
 
-	$TestProfileDirectory = GetTestProfileDirectory "input" "vsbsditools"
+	$TestProfileDirectory = GetTestProfileDirectory "input" "vsbsdltools"
 
 	$IgnoreList = ReadIgnoreList ${TestProfileDirectory}
 
