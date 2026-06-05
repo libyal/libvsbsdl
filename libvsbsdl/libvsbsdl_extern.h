@@ -24,21 +24,28 @@
 
 #include <common.h>
 
+#if !defined( __CYGWIN__ ) && !defined( _WIN32 ) && defined( __has_attribute )
+#if __has_attribute( visibility )
+#define LIBVSBSDL_INTERNAL	__attribute__((visibility("hidden"))) extern
+
+#else
+#define LIBVSBSDL_INTERNAL	extern
+
+#endif /* __has_attribute( visibility ) */
+#else
+#define LIBVSBSDL_INTERNAL	extern
+
+#endif /* !defined( __CYGWIN__ ) && !defined( _WIN32 ) && defined( __has_attribute ) */
+
 /* Define HAVE_LOCAL_LIBVSBSDL for local use of libvsbsdl
  */
 #if !defined( HAVE_LOCAL_LIBVSBSDL )
 
 #include <libvsbsdl/extern.h>
 
-#if defined( __CYGWIN__ ) || defined( __MINGW32__ )
-#define LIBVSBSDL_EXTERN_VARIABLE	extern
-#else
-#define LIBVSBSDL_EXTERN_VARIABLE	LIBVSBSDL_EXTERN
-#endif
-
 #else
 #define LIBVSBSDL_EXTERN		/* extern */
-#define LIBVSBSDL_EXTERN_VARIABLE	extern
+#define LIBVSBSDL_EXTERN_VARIABLE	LIBVSBSDL_INTERNAL
 
 #endif /* !defined( HAVE_LOCAL_LIBVSBSDL ) */
 

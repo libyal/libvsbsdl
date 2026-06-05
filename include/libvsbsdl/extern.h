@@ -31,14 +31,17 @@
  */
 #if defined( LIBVSBSDL_DLL_EXPORT )
 #define LIBVSBSDL_EXTERN __declspec(dllexport)
+#define LIBVSBSDL_EXTERN_VARIABLE extern __declspec(dllexport)
 
 #elif defined( LIBVSBSDL_DLL_IMPORT )
-#define LIBVSBSDL_EXTERN extern __declspec(dllimport)
+#define LIBVSBSDL_EXTERN __declspec(dllimport)
+#define LIBVSBSDL_EXTERN_VARIABLE extern __declspec(dllimport)
 
 #else
 #define LIBVSBSDL_EXTERN extern
+#define LIBVSBSDL_EXTERN_VARIABLE extern
 
-#endif
+#endif /* defined( LIBVSBSDL_DLL_EXPORT ) */
 
 #endif /* !defined( _LIBVSBSDL_EXTERN_H ) */
 

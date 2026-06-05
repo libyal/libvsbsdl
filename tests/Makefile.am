@@ -18,6 +18,10 @@ AM_CPPFLAGS = \
 	@PTHREAD_CPPFLAGS@ \
 	@LIBVSBSDL_DLL_IMPORT@
 
+AM_TESTS_ENVIRONMENT = \
+	export PYTHON="@PYTHON@"; \
+	export TESTS_USE_WINAPI="@TESTS_USE_WINAPI@";
+
 if HAVE_PYTHON_TESTS
 TESTS_PYVSBSDL = \
 	test_python_module.sh
@@ -225,7 +229,8 @@ vsbsdl_test_tools_output_SOURCES = \
 
 vsbsdl_test_tools_output_LDADD = \
 	../libvsbsdl/libvsbsdl.la \
-	@LIBCERROR_LIBADD@
+	@LIBCERROR_LIBADD@ \
+	@LIBINTL@
 
 vsbsdl_test_tools_signal_SOURCES = \
 	../vsbsdltools/vsbsdltools_signal.c ../vsbsdltools/vsbsdltools_signal.h \
