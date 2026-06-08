@@ -537,7 +537,7 @@ int vsbsdl_test_partition_free(
 	libcerror_error_t *error                     = NULL;
 	int result                                   = 0;
 
-#if defined( HAVE_VSBSDL_TEST_RWLOCK )
+#if defined( HAVE_VSBSDL_TEST_RWLOCK_HOOK )
 	libvsbsdl_io_handle_t *io_handle             = NULL;
 	libvsbsdl_partition_t *partition             = NULL;
 	libvsbsdl_partition_entry_t *partition_entry = NULL;
@@ -561,7 +561,7 @@ int vsbsdl_test_partition_free(
 	libcerror_error_free(
 	 &error );
 
-#if defined( HAVE_VSBSDL_TEST_RWLOCK )
+#if defined( HAVE_VSBSDL_TEST_RWLOCK_HOOK )
 
 	/* Initialize test
 	 */
@@ -704,7 +704,7 @@ int vsbsdl_test_partition_free(
 	 "error",
 	 error );
 
-#endif /* defined( HAVE_VSBSDL_TEST_RWLOCK ) */
+#endif /* defined( HAVE_VSBSDL_TEST_RWLOCK_HOOK ) */
 
 	return( 1 );
 
@@ -714,7 +714,7 @@ on_error:
 		libcerror_error_free(
 		 &error );
 	}
-#if defined( HAVE_VSBSDL_TEST_RWLOCK )
+#if defined( HAVE_VSBSDL_TEST_RWLOCK_HOOK )
 	if( partition != NULL )
 	{
 		libvsbsdl_partition_free(
@@ -733,7 +733,7 @@ on_error:
 		 &io_handle,
 		 NULL );
 	}
-#endif /* defined( HAVE_VSBSDL_TEST_RWLOCK ) */
+#endif /* defined( HAVE_VSBSDL_TEST_RWLOCK_HOOK ) */
 
 	return( 0 );
 }
@@ -1384,7 +1384,7 @@ int vsbsdl_test_partition_read_buffer(
 	libcerror_error_free(
 	 &error );
 
-#if defined( HAVE_VSBSDL_TEST_RWLOCK )
+#if defined( HAVE_VSBSDL_TEST_RWLOCK_HOOK )
 
 	/* Test libvsbsdl_partition_read_buffer with pthread_rwlock_wrlock failing in libcthreads_read_write_lock_grab_for_write
 	 */
@@ -1442,7 +1442,7 @@ int vsbsdl_test_partition_read_buffer(
 		libcerror_error_free(
 		 &error );
 	}
-#endif /* defined( HAVE_VSBSDL_TEST_RWLOCK ) */
+#endif /* defined( HAVE_VSBSDL_TEST_RWLOCK_HOOK ) */
 
 	return( 1 );
 
@@ -1708,7 +1708,7 @@ int vsbsdl_test_partition_read_buffer_at_offset(
 	libcerror_error_free(
 	 &error );
 
-#if defined( HAVE_VSBSDL_TEST_RWLOCK )
+#if defined( HAVE_VSBSDL_TEST_RWLOCK_HOOK )
 
 	/* Test libvsbsdl_partition_read_buffer_at_offset with pthread_rwlock_wrlock failing in libcthreads_read_write_lock_grab_for_write
 	 */
@@ -1768,7 +1768,7 @@ int vsbsdl_test_partition_read_buffer_at_offset(
 		libcerror_error_free(
 		 &error );
 	}
-#endif /* defined( HAVE_VSBSDL_TEST_RWLOCK ) */
+#endif /* defined( HAVE_VSBSDL_TEST_RWLOCK_HOOK ) */
 
 	return( 1 );
 
@@ -2218,7 +2218,7 @@ int vsbsdl_test_partition_seek_offset(
 	libcerror_error_free(
 	 &error );
 
-#if defined( HAVE_VSBSDL_TEST_RWLOCK )
+#if defined( HAVE_VSBSDL_TEST_RWLOCK_HOOK )
 
 	/* Test libvsbsdl_partition_seek_offset with pthread_rwlock_wrlock failing in libcthreads_read_write_lock_grab_for_write
 	 */
@@ -2276,7 +2276,7 @@ int vsbsdl_test_partition_seek_offset(
 		libcerror_error_free(
 		 &error );
 	}
-#endif /* defined( HAVE_VSBSDL_TEST_RWLOCK ) */
+#endif /* defined( HAVE_VSBSDL_TEST_RWLOCK_HOOK ) */
 
 	return( 1 );
 
@@ -2351,7 +2351,7 @@ int vsbsdl_test_partition_get_offset(
 	libcerror_error_free(
 	 &error );
 
-#if defined( HAVE_VSBSDL_TEST_RWLOCK )
+#if defined( HAVE_VSBSDL_TEST_RWLOCK_HOOK )
 
 	/* Test libvsbsdl_partition_get_offset with pthread_rwlock_rdlock failing in libcthreads_read_write_lock_grab_for_read
 	 */
@@ -2407,7 +2407,7 @@ int vsbsdl_test_partition_get_offset(
 		libcerror_error_free(
 		 &error );
 	}
-#endif /* defined( HAVE_VSBSDL_TEST_RWLOCK ) */
+#endif /* defined( HAVE_VSBSDL_TEST_RWLOCK_HOOK ) */
 
 	return( 1 );
 
@@ -2482,7 +2482,7 @@ int vsbsdl_test_partition_get_size(
 	libcerror_error_free(
 	 &error );
 
-#if defined( HAVE_VSBSDL_TEST_RWLOCK )
+#if defined( HAVE_VSBSDL_TEST_RWLOCK_HOOK )
 
 	/* Test libvsbsdl_partition_get_size with pthread_rwlock_rdlock failing in libcthreads_read_write_lock_grab_for_read
 	 */
@@ -2538,7 +2538,7 @@ int vsbsdl_test_partition_get_size(
 		libcerror_error_free(
 		 &error );
 	}
-#endif /* defined( HAVE_VSBSDL_TEST_RWLOCK ) */
+#endif /* defined( HAVE_VSBSDL_TEST_RWLOCK_HOOK ) */
 
 	return( 1 );
 

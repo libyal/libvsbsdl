@@ -116,6 +116,7 @@ vsbsdl_test_notify_LDADD = \
 	@LIBCERROR_LIBADD@
 
 vsbsdl_test_partition_SOURCES = \
+	vsbsdl_test_extern.h \
 	vsbsdl_test_functions.c vsbsdl_test_functions.h \
 	vsbsdl_test_getopt.c vsbsdl_test_getopt.h \
 	vsbsdl_test_libbfio.h \
@@ -244,6 +245,7 @@ vsbsdl_test_tools_signal_LDADD = \
 	@LIBCERROR_LIBADD@
 
 vsbsdl_test_volume_SOURCES = \
+	vsbsdl_test_extern.h \
 	vsbsdl_test_functions.c vsbsdl_test_functions.h \
 	vsbsdl_test_getopt.c vsbsdl_test_getopt.h \
 	vsbsdl_test_libbfio.h \
