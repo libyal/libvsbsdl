@@ -1,5 +1,5 @@
 /*
- * Shows information obtained from a BSD disklabel volume system
+ * Shows information obtained from a BSD disklabel volume system.
  *
  * Copyright (C) 2023-2026, Joachim Metz <joachim.metz@gmail.com>
  *
@@ -21,11 +21,8 @@
 
 #include <common.h>
 #include <file_stream.h>
-#include <memory.h>
 #include <system_string.h>
 #include <types.h>
-
-#include <stdio.h>
 
 #if defined( HAVE_FCNTL_H ) || defined( WINAPI )
 #include <fcntl.h>
@@ -55,28 +52,6 @@
 
 info_handle_t *vsbsdlinfo_info_handle = NULL;
 int vsbsdlinfo_abort                  = 0;
-
-/* Prints the executable usage information
- */
-void usage_fprint(
-      FILE *stream )
-{
-	if( stream == NULL )
-	{
-		return;
-	}
-	fprintf( stream, "Use vsbsdlinfo to determine information about a BSD disklabel\n"
-	                 "volume system.\n\n" );
-
-	fprintf( stream, "Usage: vsbsdlinfo [ -o offset ] [ -hvV ] source\n\n" );
-
-	fprintf( stream, "\tsource: the source file\n\n" );
-
-	fprintf( stream, "\t-h:     shows this help\n" );
-	fprintf( stream, "\t-o:     specify the volume offset in bytes\n" );
-	fprintf( stream, "\t-v:     verbose output to stderr\n" );
-	fprintf( stream, "\t-V:     print version\n" );
-}
 
 /* Signal handler for vsbsdlinfo
  */
@@ -130,11 +105,24 @@ int wmain( int argc, wchar_t * const argv[] )
 int main( int argc, char * const argv[] )
 #endif
 {
-	libcerror_error_t *error                 = NULL;
+	const char *description    = \
+		"Use vsbsdlinfo to determine information about a BSD disklabel volume system.";
+
+	vsbsdltools_option_t options[ ] = {
+		{ 'h', NULL, "shows this help" },
+		{ 'o', "offset", "specify the volume offset in bytes" },
+		{ 'v', NULL, "verbose output to stderr" },
+		{ 'V', NULL, "print version" },
+		{ 0, "source", "the source image" },
+	};
+	system_character_t options_string[ 32 ];
+
+	libvsbsdl_error_t *error                 = NULL;
 	system_character_t *option_volume_offset = NULL;
 	system_character_t *source               = NULL;
 	char *program                            = "vsbsdlinfo";
 	system_integer_t option                  = 0;
+	int number_of_options                    = (int) ( sizeof( options ) / sizeof( vsbsdltools_option_t ) );
 	int verbose                              = 0;
 
 #if defined( __MINGW32__ ) && defined( HAVE_MINGW_BINMODE )
@@ -172,10 +160,22 @@ int main( int argc, char * const argv[] )
 	 stdout,
 	 program );
 
+	if( vsbsdltools_getopt_get_options_string(
+	     options,
+	     number_of_options,
+	     options_string,
+	     32 ) != 1 )
+	{
+		fprintf(
+		 stderr,
+		 "Unable to determine options string.\n" );
+
+		goto on_error;
+	}
 	while( ( option = vsbsdltools_getopt(
 	                   argc,
 	                   argv,
-	                   _SYSTEM_STRING( "ho:vV" ) ) ) != (system_integer_t) -1 )
+	                   options_string ) ) != (system_integer_t) -1 )
 	{
 		switch( option )
 		{
@@ -186,14 +186,22 @@ int main( int argc, char * const argv[] )
 				 "Invalid argument: %" PRIs_SYSTEM "\n",
 				 argv[ optind - 1 ] );
 
-				usage_fprint(
-				 stdout );
+				vsbsdltools_getopt_usage_fprint(
+				 stdout,
+				 program,
+				 description,
+				 options,
+				 number_of_options );
 
 				return( EXIT_FAILURE );
 
 			case (system_integer_t) 'h':
-				usage_fprint(
-				 stdout );
+				vsbsdltools_getopt_usage_fprint(
+				 stdout,
+				 program,
+				 description,
+				 options,
+				 number_of_options );
 
 				return( EXIT_SUCCESS );
 
@@ -201,6 +209,7 @@ int main( int argc, char * const argv[] )
 				option_volume_offset = optarg;
 
 				break;
+
 
 			case (system_integer_t) 'v':
 				verbose = 1;
@@ -218,10 +227,14 @@ int main( int argc, char * const argv[] )
 	{
 		fprintf(
 		 stderr,
-		 "Missing source file.\n" );
+		 "Missing source image.\n" );
 
-		usage_fprint(
-		 stdout );
+		vsbsdltools_getopt_usage_fprint(
+		 stdout,
+		 program,
+		 description,
+		 options,
+		 number_of_options );
 
 		return( EXIT_FAILURE );
 	}

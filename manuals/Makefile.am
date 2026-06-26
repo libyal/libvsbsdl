@@ -3,8 +3,7 @@ man_MANS = \
 	vsbsdlinfo.1
 
 EXTRA_DIST = \
-	libvsbsdl.3 \
-	vsbsdlinfo.1
+	$(man_MANS)
 
 DISTCLEANFILES = \
 	Makefile \

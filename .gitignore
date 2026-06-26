@@ -151,7 +151,6 @@ stamp-h[1-9]
 /tests/vsbsdl_test_notify
 /tests/vsbsdl_test_partition
 /tests/vsbsdl_test_partition_entry
-/tests/vsbsdl_test_partition_values
 /tests/vsbsdl_test_sector_data
 /tests/vsbsdl_test_support
 /tests/vsbsdl_test_tools_info_handle
