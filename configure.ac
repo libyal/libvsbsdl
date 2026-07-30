@@ -2,7 +2,7 @@ AC_PREREQ([2.71])
 
 AC_INIT(
   [libvsbsdl],
-  [20260626],
+  [20260730],
   [https://github.com/libyal/libvsbsdl/issues])
 
 AC_CONFIG_SRCDIR(
